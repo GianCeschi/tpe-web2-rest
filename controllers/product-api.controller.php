@@ -30,7 +30,7 @@ class ProductApiController
         $parametros = []; //Arreglo vacio que se va llenando si existen cosas en el GET.
         //Ordenado por defecto
         $parametros['sortBy'] = $_GET['sortBy'] ?? "precio";
-        $parametros['order'] = $_GET['order'] ?? "ASC";
+        $parametros['order'] = $_GET['order'] ?? "asc";
         //Paginado por defecto
         $parametros['page'] = $_GET['page'] ?? 1;
         $parametros['limit'] = $_GET['limit'] ?? 5;
@@ -42,10 +42,10 @@ class ProductApiController
         if (isset($_GET['sortBy'])) {
             $parametros['sortBy'] = $_GET['sortBy'];
             if ((in_array($parametros['sortBy'], $columnas))) {
-                if (isset($_GET['order']) && ($_GET['order'] == 'ASC') || ($_GET['order'] == 'DESC')) {
+                if (isset($_GET['order']) && ($_GET['order'] == 'asc') || ($_GET['order'] == 'desc')) {
                     $parametros['order'] = $_GET['order'];
                 } else {
-                    $this->view->response("Debe ordenar los productos solo de forma 'ASC' o 'DESC ", 400);
+                    $this->view->response("Debe ordenar los productos solo de forma 'asc' o 'desc ", 400);
                     die();
                 }
             } else {
