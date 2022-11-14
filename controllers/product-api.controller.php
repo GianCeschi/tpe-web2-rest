@@ -42,11 +42,13 @@ class ProductApiController
         if (isset($_GET['sortBy'])) {
             $parametros['sortBy'] = $_GET['sortBy'];
             if ((in_array($parametros['sortBy'], $columnas))) {
-                if (isset($_GET['order']) && ($_GET['order'] == 'asc') || ($_GET['order'] == 'desc')) {
-                    $parametros['order'] = $_GET['order'];
-                } else {
-                    $this->view->response("Debe ordenar los productos solo de forma 'asc' o 'desc ", 400);
-                    die();
+                if(isset($_GET['order'])){
+                    if (($_GET['order'] == 'asc') || ($_GET['order'] == 'desc')) {
+                        $parametros['order'] = $_GET['order'];
+                    } else {
+                        $this->view->response("Debe ordenar los productos solo de forma 'asc' o 'desc ", 400);
+                        die();
+                    }
                 }
             } else {
                 $this->view->response("Debe ingresar una columna valida en la tabla de productos", 400);
@@ -85,7 +87,7 @@ class ProductApiController
         }else{
             $products = $this->model->getAllFilter($parametros);
         }
-        if (empty($products)) return  $this->view->response("El arreglo esta vacio", 204); // Si me ponen un booleano o algo que no sea un producto me manda un error 204. VIENE ACA POR EL VALUE 
+        if (empty($products)) return  $this->view->response($products, 204); // Si me ponen un booleano o algo que no sea un producto me manda un error 204. VIENE ACA POR EL VALUE 
         $this->view->response($products);
     }
 
