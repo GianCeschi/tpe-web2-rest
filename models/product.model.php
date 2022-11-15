@@ -10,9 +10,6 @@ class ProductModel
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=db_tienda;charset=utf8', 'root', '');
     }
 
-    /**
-     * Devuelve la lista de tareas completa.z
-     */
     //Recibe los parametros
     public function getAll($parametros)
     {
@@ -21,14 +18,15 @@ class ProductModel
         //vinculo categoria con producto. LO HAGO PARA MOSTRAR LAS CATEGORIAS EN TODOS LOS PRODUCTOS. 
         $limit = $parametros['limit'];
         $offset = $parametros['page'] * $parametros['limit'] - $parametros['limit']; //Es igual a la pagina x el limite menos el limite. Entonces muestra la cantidad de elementos dados x el limite a partir de el N elemento dado.
-        
-        $query = $this->db->prepare("SELECT productos.*, categorias.categoria FROM productos JOIN categorias ON productos.id_categoria = categorias.id
-                ORDER BY " . $parametros['sortBy'] . " ". $parametros['order'] .  "
+
+        $query = $this->db->prepare("SELECT productos.*, categorias.categoria FROM productos JOIN categorias 
+                ON productos.id_categoria = categorias.id
+                ORDER BY " . $parametros['sortBy'] . " " . $parametros['order'] .  "
                 LIMIT " . $limit . "
                 OFFSET " . $offset . "
-        "); 
+        ");
         $query->execute();
-        
+
         // 3. obtengo los resultados
         $products = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -41,16 +39,17 @@ class ProductModel
         // ya esta abierta por el constructor de la clase
         //vinculo categoria con producto. LO HAGO PARA MOSTRAR LAS CATEGORIAS EN TODOS LOS PRODUCTOS. 
         $limit = $parametros['limit'];
-        $offset = $parametros['page'] * $parametros['limit'] - $parametros['limit']; //Es igual a la pagina x el limite menos el limite. Entonces muestra la cantidad de elementos dados x el limite a partir de el N elemento dado.
+        $offset = $parametros['page'] * $parametros['limit'] - $parametros['limit'];
 
-        $query = $this->db->prepare("SELECT productos.*, categorias.categoria FROM productos JOIN categorias ON productos.id_categoria = categorias.id
+        $query = $this->db->prepare("SELECT productos.*, categorias.categoria FROM productos JOIN categorias
+                ON productos.id_categoria = categorias.id
                 WHERE " . $parametros['filter'] . " = ? 
-                ORDER BY " . $parametros['sortBy'] . " ". $parametros['order'] .  "
+                ORDER BY " . $parametros['sortBy'] . " " . $parametros['order'] .  "
                 LIMIT " . $limit . "
                 OFFSET " . $offset . "
-        "); 
+        ");
         $query->execute([$parametros['value']]);
-        
+
         // 3. obtengo los resultados
         $products = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -102,15 +101,5 @@ class ProductModel
     {
         $query = $this->db->prepare('DELETE FROM productos WHERE id = ?');
         $query->execute([$id]);
-
-        // header("Location: " . BASE_URL ); COMENTO PORQUE ME TIRA ERROR 
-    }
-
-    function updateProductById($modelo, $marca, $precio, $imagen, $id_categoria, $id)
-    {
-        $query = $this->db->prepare('UPDATE productos SET modelo = ?, marca = ?, precio = ?, imagen = ?, id_categoria = ? WHERE id = ?;');
-        $query->execute([$modelo, $marca, $precio, $imagen, $id_categoria, $id]);
-
-        // header("Location: " . BASE_URL. "admin" ); //Lo mando a la seccion admin luego de editar. COMENTO PORQUE ME TIRA ERROR.
     }
 }

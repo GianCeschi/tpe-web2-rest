@@ -11,12 +11,14 @@ Si se quiere un producto en especifico debe indicarlo con su id : http://localho
 
 
 FILTERING:
+
 Agregue parámetros de consulta a la solicitud GET:
 
 /products?filter=categoria&value=zapatillas - Se tiene que filtrar por categoria y esta combinado con el valor del parametro value (En este caso quiero que me filtre por zapatillas, pero lo puede hacer por cualquier producto disponible).
 
 
 SORTING:
+
 Agregue parámetros de consulta a la solicitud GET:
 
 /products?sortBy=precio&order=desc
@@ -25,6 +27,7 @@ Nota: Si no se indica nada, hay un valor por defecto que es sortBy=precio y el o
 
 
 PAGINATION:
+
 Agregue parámetros de consulta a la solicitud GET:
 
 /products?page=1&limit=5
@@ -32,12 +35,14 @@ Agregue parámetros de consulta a la solicitud GET:
 Nota: Si no se indica nada, hay un valor por defecto que es page=1 y limit=5
 
 METODO GET:
+
 Si le agrega un id existente va a obtener un producto especifico:
 
 Por ejemplo:
 http://localhost/tpe-web2-rest/api/products/87
 
 METODO POST:
+
 Para insertar un producto nuevo debe ingresar la informacion en formato JSON de la siguiente manera:
  {
         "modelo": "Air Max",
@@ -48,6 +53,7 @@ Para insertar un producto nuevo debe ingresar la informacion en formato JSON de 
     }
 
 METODO DELETE:
+
 Para eliminar se debe conocer el id del producto a eliminar:
 
 Por ejemplo:

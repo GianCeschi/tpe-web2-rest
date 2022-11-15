@@ -16,7 +16,7 @@ class ProductApiController
         $this->view = new ApiView();
 
         //lee el body del request
-        $this->data = file_get_contents("php://input"); //saco el body del request.
+        $this->data = file_get_contents("php://input"); 
     }
 
     private function getData()
